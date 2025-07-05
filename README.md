@@ -31,7 +31,7 @@ Feel free to explore and connect!
 
 ## 🔗 Live Demo
 
-Check it out live here: ([https://yourusername.github.io/portfolio](https://vakul-gaur.github.io/Personal_Portfolio/))
+Check it out live here: ([https://vakul-gaur.github.io/portfolio](https://vakul-gaur.github.io/Personal_Portfolio/))
 
 ---
 
