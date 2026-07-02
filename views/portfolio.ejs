@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <span class="section-tag">My Work</span>
+    <h1>My <span class="gradient-text">Portfolio</span></h1>
+    <p>Explore my complete collection of projects spanning various industries, technologies, and design challenges.</p>
+  </div>
+</div>
+
+<section class="portfolio-section section-pad">
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All Projects</button>
+    <button class="filter-btn" data-filter="frontend">Frontend</button>
+    <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+    <button class="filter-btn" data-filter="ai">AI / ML</button>
+  </div>
+
+  <div class="portfolio-grid">
+    <% projects.forEach((project, i) => { %>
+      <div class="port-card reveal" data-category="<%= project.category %>">
+        <div class="port-img-wrap">
+          <img src="/<%= project.img %>" alt="<%= project.title %>" onerror="this.src='/img/placeholder.png'" >
+          <div class="port-overlay">
+            <a href="<%= project.link %>" class="port-link">
+              <i class="fas fa-external-link-alt"></i> View Project
+            </a>
+          </div>
+        </div>
+
+        <div class="port-info">
+          <div class="port-cat">
+            <%= project.category %>
+          </div>
+          <h3><%= project.title %></h3>
+          <p><%= project.desc %></p>
+
+          <div class="proj-tags">
+            <% project.tags.forEach(tag => { %>
+              <span><%= tag %></span>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

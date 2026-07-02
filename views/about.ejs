@@ -1,0 +1,158 @@
+<%- include('partials/header') %>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <span class="section-tag">Who I Am</span>
+    <h1>About <span class="gradient-text">Me</span></h1>
+    <p>Discover my journey, skills, and what drives me to create exceptional digital experiences.</p>
+  </div>
+</div>
+
+<section class="about-strip section-pad">
+  <div class="strip-inner">
+    <div class="strip-img-side">
+      <div class="img-card-wrap">
+        <div class="badge-float"><span class="badge-num">12+</span><span class="badge-lbl">Projects Done</span></div>
+        <img src="/img/img2.png" alt="Vakul" class="strip-img"/>
+        <div class="exp-badge"><span>2+</span> Internships</div>
+      </div>
+    </div>
+
+    <div class="strip-text-side">
+      <span class="section-tag">My Story</span>
+      <h2>Every great project begins with an even <span class="gradient-text">better solution.</span></h2>
+      <p>I'm a creative and detail-driven Full Stack Developer who thrives on turning ideas into meaningful digital experiences. My focus is on building websites that are not only visually appealing but also intuitive, fast, and aligned with real goals.</p>
+      <p>What defines my approach is deep ownership in every project — listening first, building with purpose, and delivering results that stand the test of time. I'm continuously exploring new technologies to serve those who trust me with their vision.</p>
+      <div class="social-row mt-3">
+        <a href="https://www.linkedin.com/in/vakul-kumar-gaur-491904285" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/vakul-gaur" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://wa.me/918279866066" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://t.me/vakul_gaur" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://www.instagram.com/vakul_gaur05" target="_blank"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-section section-pad">
+  <div class="section-header">
+    <span class="section-tag">Expertise</span>
+    <h2>Technical <span class="gradient-text">Skills</span></h2>
+  </div>
+
+  <div class="skills-tabs">
+    <button class="skill-tab active" data-tab="languages">Languages</button>
+    <button class="skill-tab" data-tab="frontend">Frontend</button>
+    <button class="skill-tab" data-tab="backend">Backend</button>
+    <button class="skill-tab" data-tab="database">Database</button>
+    <button class="skill-tab" data-tab="tools">Tools</button>
+    <button class="skill-tab" data-tab="concepts">Concepts</button>
+  </div>
+
+  <% ['languages','frontend','backend','database','tools', 'concepts'].forEach(cat => { %>
+  <div class="skills-grid tab-panel <%= cat === 'languages' ? 'active' : '' %>" id="tab-<%= cat %>">
+    <% skills[cat].forEach(skill => { %>
+    <div class="skill-card reveal">
+      <img src="<%= skill.icon %>" alt="<%= skill.name %>" class="skill-icon" onerror="this.style.display='none'"/>
+      <div class="skill-info">
+        <div class="skill-header">
+          <span class="skill-name"><%= skill.name %></span>
+          <span class="skill-pct"><%= skill.level %>%</span>
+        </div>
+        <div class="skill-bar">
+          <div class="skill-fill" style="width: 0%" data-width="<%= skill.level %>%"></div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% }) %>
+</section>
+
+<section class="timeline-section section-pad">
+  <div class="section-header">
+    <span class="section-tag">My Journey</span>
+    <h2>Experience & <span class="gradient-text">Education</span></h2>
+  </div>
+
+  <div class="tl-tabs">
+    <button class="tl-tab active" data-tl="experience">Experience</button>
+    <button class="tl-tab" data-tl="education">Education</button>
+    <button class="tl-tab" data-tl="achievements">Achievements</button>
+  </div>
+
+  <div class="tl-panel active" id="tl-experience">
+    <% experience.forEach(item => { %>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-period"><i class="fas fa-calendar-alt"></i> <%= item.period %></span>
+        <h3><%= item.role %></h3>
+        <h4 class="tl-org"><%= item.company %></h4>
+        <p><%= item.desc %></p>
+        <div class="tl-tags">
+          <% item.tags.forEach(t => { %><span><%= t %></span><% }) %>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+
+  <div class="tl-panel" id="tl-education">
+    <% education.forEach(item => { %>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-period"><i class="fas fa-calendar-alt"></i> <%= item.period %></span>
+        <h3><%= item.degree %></h3>
+        <h4 class="tl-org"><%= item.institution %></h4>
+        <span class="gpa-badge"><%= item.gpa %></span>
+        <p><%= item.desc %></p>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+
+  <div class="tl-panel" id="tl-achievements">
+    <% achievements.forEach(item => { %>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-period"><i class="fas fa-calendar-alt"></i> <%= item.year %></span>
+        <h3><%= item.title %></h3>
+        <h4 class="tl-org"><%= item.org %></h4>
+        <p><%= item.desc %></p>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</section>
+
+<section class="social-section section-pad">
+  <div class="section-header">
+    <span class="section-tag">Connect</span>
+    <h2>Let's Get <span class="gradient-text">Social</span></h2>
+  </div>
+  <div class="social-cards-grid">
+    <a href="https://www.instagram.com/vakul_gaur05" target="_blank" class="social-card instagram">
+      <i class="fab fa-instagram"></i><span>Instagram</span><small>70+ Followers</small>
+    </a>
+    <a href="https://github.com/vakul-gaur" target="_blank" class="social-card github">
+      <i class="fab fa-github"></i><span>GitHub</span><small>Follow Me</small>
+    </a>
+    <a href="https://www.linkedin.com/in/vakul-kumar-gaur-491904285" target="_blank" class="social-card linkedin">
+      <i class="fab fa-linkedin"></i><span>LinkedIn</span><small>1500+ Connections</small>
+    </a>
+    <a href="https://wa.me/918279866066" target="_blank" class="social-card whatsapp">
+      <i class="fab fa-whatsapp"></i><span>WhatsApp</span><small>Let's Chat</small>
+    </a>
+    <a href="https://t.me/vakul_gaur" target="_blank" class="social-card telegram">
+      <i class="fab fa-telegram"></i><span>Telegram</span><small>Let's Connect</small>
+    </a>
+    <a href="https://www.snapchat.com/add/vakul_gaur" target="_blank" class="social-card snapchat">
+      <i class="fab fa-snapchat-ghost"></i><span>Snapchat</span><small>Let's Be Friends</small>
+    </a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

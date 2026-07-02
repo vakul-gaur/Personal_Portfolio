@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"/>
+<title>Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="icon" type="image/png" href="/img/icon.png">
+<link rel="stylesheet" href="/css/admin.css"/>
+
+</head>
+<body data-theme="dark">
+<div class="shell">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-left"><span class="dot"></span><span>Admin Panel</span></div>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close menu"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="nav-item active" data-target="overview"><i class="fas fa-grip"></i>Overview</div>
+    <div class="nav-item" data-target="messages"><i class="fas fa-envelope"></i>Messages</div>
+    <div class="nav-item" data-target="analytics"><i class="fas fa-chart-line"></i>Analytics</div>
+    <div class="nav-divider">Vakul Kumar Gaur</div>
+    <div class="sidebar-bottom">
+      <div class="nav-item" id="sidebarThemeToggle"><i class="fas fa-moon"></i><span id="sidebarThemeLabel">Dark mode</span></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
+        <div>
+          <h1 id="pageTitle">Dashboard Overview</h1>
+          <p class="sub" id="pageSub">Welcome back — here's what's happening with your portfolio.</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="clock">
+          <div class="time" id="clockTime">--:--:--</div>
+          <div class="date" id="clockDate">-- --- ----</div>
+        </div>
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+      </div>
+    </div>
+
+    <%
+      const sortedVisitors = (visitors || []).slice().sort((a, b) => new Date(b.lastVisit) - new Date(a.lastVisit));
+      const top5Visitors = sortedVisitors.slice(0, 5);
+    %>
+
+    <section class="section active" id="overview">
+      <div class="welcome-card">
+        <div class="wc-left">
+          <div class="wc-icon"><i class="fas fa-hand-sparkles"></i></div>
+          <div>
+            <h2>Welcome back, Vakul 👋</h2>
+            <p>Here's a quick snapshot of your portfolio's traffic, messages and engagement.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="icon cyan"><i class="fas fa-users"></i></div>
+          <span class="num"><%= visitorCount || 0 %></span>
+          <div class="lbl">Total Visitors</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon purple"><i class="fas fa-envelope"></i></div>
+          <span class="num" id="ov-total"><%= contacts.length %></span>
+          <div class="lbl">Total Messages</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon cyan"><i class="fas fa-envelope-open-text"></i></div>
+          <span class="num" id="ov-unread"><%= contacts.filter(c => !c.read).length %></span>
+          <div class="lbl">Unread Messages</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon gold"><i class="fas fa-star"></i></div>
+          <span class="num" id="ov-starred"><%= contacts.filter(c => c.starred).length %></span>
+          <div class="lbl">Starred Messages</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon green"><i class="fas fa-eye"></i></div>
+          <span class="num"><%= portfolioViews || 0 %></span>
+          <div class="lbl">Portfolio Views</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon purple"><i class="fas fa-file-arrow-down"></i></div>
+          <span class="num"><%= resumeDownloads || 0 %></span>
+          <div class="lbl">Resume Downloads</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h3><span class="live-dot"></span>Live Activity</h3>
+            <span class="meta">Most recent visitor activity</span>
+          </div>
+          <div class="activity-list">
+            <% if (!sortedVisitors.length) { %>
+              <div class="activity-empty">No activity yet.</div>
+            <% } else { %>
+              <% sortedVisitors.slice(0, 6).forEach(v => { %>
+
+                <div class="activity-item">
+                  <div class="a-icon"><i class="fas fa-location-dot"></i></div>
+                  <div class="a-text">
+                    <b><%= v.city || 'Unknown' %>, <%= v.country || 'Unknown' %></b> visited via <%= v.browser || 'Unknown browser' %> (<%= v.device || 'Unknown device' %>)
+                  </div>
+                  <div class="a-time"><%= new Date(v.lastVisit).toLocaleString() %></div>
+                </div>
+              <% }) %>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>Message Status</h3>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="statusChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>Recent Visitors</h3>
+          <span class="meta">Showing latest 5 · full list under Analytics</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Visitor</th>
+                <th>Location</th>
+                <th>Device</th>
+                <th>Browser</th>
+                <th>Last Visit</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if (!top5Visitors.length) { %>
+                <tr><td colspan="5" style="text-align:center;padding:25px;">No visitors yet.</td></tr>
+              <% } else { %>
+                <% top5Visitors.forEach(v => { %>
+                  <tr>
+                    <td><strong><%= v.ip %></strong></td>
+                    <td><%= v.city || "Unknown" %>, <%= v.country || "Unknown" %></td>
+                    <td><%= v.device %></td>
+                    <td><%= v.browser %></td>
+                    <td><%= new Date(v.lastVisit).toLocaleString() %></td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="messages">
+      <% if (!contacts || contacts.length === 0) { %>
+        <div class="empty"><i class="fas fa-inbox"></i>No messages yet.</div>
+      <% } else { %>
+      <div class="toolbar">
+        <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search name, email, subject, message..."/></div>
+        <select id="statusFilter">
+          <option value="all">All statuses</option>
+          <option value="unread">Unread only</option>
+          <option value="read">Read only</option>
+        </select>
+
+        <select id="starFilter">
+          <option value="all">All messages</option>
+          <option value="starred">Starred only</option>
+        </select>
+        <button class="tb-btn" id="markAllReadBtn"><i class="fas fa-check-double"></i>Mark all read</button>
+        <button class="tb-btn" id="exportCsvBtn"><i class="fas fa-file-export"></i>Export CSV</button>
+      </div>
+
+      <div class="bulk-bar" id="bulkBar">
+        <span><span id="selCount">0</span> selected</span>
+        <div class="spacer"></div>
+        <button class="tb-btn" id="bulkReadBtn"><i class="fas fa-envelope-open"></i>Mark read</button>
+        <button class="tb-btn" id="bulkStarBtn"><i class="fas fa-star"></i>Star</button>
+        <button class="tb-btn danger" id="bulkDeleteBtn"><i class="fas fa-trash"></i>Delete selected</button>
+      </div>
+
+      <div class="table-scroll">
+      <table id="msgTable">
+        <thead>
+          <tr>
+            <th style="width:34px"><input type="checkbox" id="selectAll"/></th>
+            <th style="width:34px"></th>
+            <th>Status</th>
+            <th class="sortable" data-sort="name">Name <i class="fas fa-sort"></i></th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th class="sortable" data-sort="subject">Subject <i class="fas fa-sort"></i></th>
+            <th>Message</th>
+            <th class="sortable" data-sort="date">Date <i class="fas fa-sort"></i></th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% contacts.forEach(c => { %>
+          <tr data-id="<%= c._id %>"
+              data-read="<%= c.read ? '1' : '0' %>"
+              data-starred="<%= c.starred ? '1' : '0' %>"
+              data-name="<%= c.name %>"
+              data-subject="<%= c.subject || '' %>"
+              data-date="<%= new Date(c.createdAt).getTime() %>"
+              class="<%= c.read ? '' : 'unread-row' %>">
+            <td><input type="checkbox" class="rowSelect"/></td>
+            <td><button class="btn-icon star <%= c.starred ? 'active' : '' %>" data-action="toggle-star"><i class="<%= c.starred ? 'fas' : 'far' %> fa-star"></i></button></td>
+            <td><button class="badge <%= c.read ? 'read' : 'unread' %>" data-action="toggle-read"><%= c.read ? 'Read' : 'New' %></button></td>
+            <td><%= c.name %></td>
+            <td><a class="mailto" href="mailto:<%= c.email %>"><%= c.email %></a></td>
+            <td><%= c.phone || '—' %></td>
+            <td><%= c.subject || '—' %></td>
+            <td class="msg-preview" title="<%= c.message %>"><%= c.message %></td>
+            <td><%= new Date(c.createdAt).toLocaleDateString() %></td>
+            <td class="actions">
+              <a class="btn-icon" href="mailto:<%= c.email %>?subject=Re: <%= encodeURIComponent(c.subject || 'Your message') %>" title="Reply"><i class="fas fa-reply"></i></a>
+              <button class="btn-icon" data-action="toggle-note" title="Internal note"><i class="fas fa-note-sticky"></i></button>
+              <button class="btn-icon danger" data-action="delete" title="Delete"><i class="fas fa-trash"></i></button>
+            </td>
+          </tr>
+
+          <tr class="note-row" data-note-for="<%= c._id %>">
+            <td colspan="10">
+              <div class="note-box">
+                <textarea placeholder="Internal note (not visible to sender)..."><%= c.adminNote || '' %></textarea>
+                <button class="note-save" data-id="<%= c._id %>">Save note</button>
+              </div>
+            </td>
+          </tr>
+
+          <% }) %>
+        </tbody>
+      </table>
+      </div>
+      <div class="pagination" id="pagination"></div>
+      <% } %>
+    </section>
+
+    <section class="section" id="analytics">
+
+      <div class="card">
+        <div class="card-head"><h3>Visitor Growth</h3><span class="meta">New visitors over time</span></div>
+        <div class="chart-wrap tall"><canvas id="growthChart"></canvas></div>
+      </div>
+
+      <div class="grid-2b">
+        <div class="card">
+          <div class="card-head"><h3>Browsers</h3></div>
+          <div class="chart-wrap"><canvas id="browserChart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Top Cities</h3></div>
+          <div class="chart-wrap"><canvas id="citiesChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Most Visited Pages</h3></div>
+        <div class="chart-wrap"><canvas id="pagesChart"></canvas></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>All Visitors</h3>
+          <span class="meta"><%= visitors.length %> total</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Visitor</th>
+                <th>Location</th>
+                <th>Device</th>
+                <th>Browser</th>
+                <th>First Visit</th>
+                <th>Last Visit</th>
+                <th>Pages Visited</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if (visitors.length === 0) { %>
+                <tr>
+                  <td colspan="7" style="text-align:center;padding:25px;">No visitors yet.</td>
+                </tr>
+              <% } %>
+              <% visitors.forEach(v => { %>
+                <tr>
+                  <td><strong><%= v.ip %></strong></td>
+                  <td><%= v.city || "Unknown" %>, <%= v.country || "Unknown" %></td>
+                  <td><%= v.device %></td>
+                  <td><%= v.browser %></td>
+                  <td><%= new Date(v.firstVisit).toLocaleString() %></td>
+                  <td><%= new Date(v.lastVisit).toLocaleString() %></td>
+                  <td>
+                    <% if (v.pages && v.pages.length) { %>
+                      <% v.pages.forEach((p, index) => { %>
+                        <span class="page-badge"><%= p.page %></span>
+                        <% if (index < v.pages.length - 1) { %><i class="fas fa-arrow-right"></i><% } %>
+                      <% }) %>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+      
+    </section>
+  </main>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+window.RAW_CONTACTS = <%- JSON.stringify(contacts.map(c => ({
+  id: c._id, date: c.createdAt, read: c.read, starred: !!c.starred
+}))) %>;
+
+window.RAW_VISITORS = <%- JSON.stringify((visitors || []).map(v => ({
+  ip: v.ip, city: v.city, country: v.country, device: v.device, browser: v.browser, firstVisit: v.firstVisit, 
+  lastVisit: v.lastVisit, pages: (v.pages || []).map(p => p.page)
+}))) %>;
+</script>
+
+<script src="/js/admin.js"></script>
+
+</body>
+</html>

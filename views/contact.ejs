@@ -1,0 +1,100 @@
+<%- include('partials/header') %>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <span class="section-tag">Get In Touch</span>
+    <h1>Contact <span class="gradient-text">Me</span></h1>
+    <p>Let's discuss how we can work together to bring your ideas to life.</p>
+  </div>
+</div>
+
+<section class="contact-section section-pad">
+  <div class="contact-wrap">
+    <div class="contact-info-col">
+      <h2>Let's Build Something <span class="gradient-text">Amazing Together</span></h2>
+      <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Reach out — I'll get back to you soon.</p>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:gaurvakul25@gmail.com">gaurvakul25@gmail.com</a>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <h4>Phone</h4>
+            <a href="tel:+918279866066">+91 8279866066</a>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <h4>Location</h4>
+            <p>Haridwar, Uttarakhand, India</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-row mt-3">
+        <a href="https://www.linkedin.com/in/vakul-kumar-gaur-491904285" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/vakul-gaur" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://wa.me/918279866066" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://t.me/vakul_gaur" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://www.instagram.com/vakul_gaur05" target="_blank"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <div class="contact-form-col">
+      <div class="form-card">
+        <h2>Send a <span class="gradient-text">Message</span></h2>
+        <p>Fill out the form and I'll get back to you shortly.</p>
+
+        <div id="formMsg" class="form-msg hidden"></div>
+
+        <form id="contactForm" novalidate>
+          <input type="text" name="website" id="website" class="honeypot" tabindex="-1" autocomplete="off"/>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name <span class="req">*</span></label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required/>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address <span class="req">*</span></label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210"/>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="Project discussion"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message <span class="req">*</span></label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary w-100" id="submitBtn">
+            <span id="btnText">Send Message <i class="fas fa-paper-plane"></i></span>
+            <span id="btnLoading" class="hidden"><i class="fas fa-spinner fa-spin"></i> Sending...</span>
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

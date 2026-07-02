@@ -1,0 +1,119 @@
+<%- include('partials/header') %>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <span class="section-tag">Professional</span>
+    <h1>My <span class="gradient-text">Resume</span></h1>
+    <p>Explore my professional journey, skills, and achievements.</p>
+  </div>
+</div>
+
+<section class="resume-section section-pad">
+  <div class="resume-wrap">
+    <div class="resume-header-card">
+      <div class="resume-avatar">VG</div>
+      <div>
+        <h1>Vakul Kumar Gaur</h1>
+        <p class="resume-tagline">Full Stack Developer</p>
+        <div class="resume-contact-row">
+          <a href="mailto:gaurvakul25@gmail.com"><i class="fas fa-envelope"></i> gaurvakul25@gmail.com</a>
+          <span><i class="fas fa-phone"></i> +91 8279866066</span>
+          <a href="https://linkedin.com/in/vakul-gaur" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <span><i class="fas fa-map-marker-alt"></i> Haridwar, Uttarakhand</span>
+        </div>
+      </div>
+      <a href="/resume/download" class="btn-primary download-btn">
+        <i class="fas fa-download"></i> Download PDF
+      </a>
+    </div>
+
+    <div class="resume-objective">
+      <h2 class="res-sec-title"><i class="fas fa-bullseye"></i> Career Objective</h2>
+      <p>Passionate and dedicated Web Developer with a strong foundation in frontend and backend technologies including Node.js, Express.js, React and MongoDB. Skilled in developing responsive, user-friendly web applications. Seeking opportunities to contribute innovative solutions and drive impactful results.</p>
+    </div>
+
+    <div class="resume-cols">
+      <div class="resume-main">
+        <h2 class="res-sec-title"><i class="fas fa-briefcase"></i> Work Experience</h2>
+        <% experience.forEach(item => { %>
+        <div class="res-item">
+          <div class="res-item-header">
+            <div>
+              <h3><%= item.role %></h3>
+              <h4><%= item.company %></h4>
+            </div>
+            <span class="res-period"><%= item.period %></span>
+          </div>
+          <p><%= item.desc %></p>
+          <div class="proj-tags">
+            <% item.tags.forEach(t => { %><span><%= t %></span><% }) %>
+          </div>
+        </div>
+        <% }) %>
+
+        <h2 class="res-sec-title mt-4"><i class="fas fa-graduation-cap"></i> Education</h2>
+        <% education.forEach(item => { %>
+        <div class="res-item">
+          <div class="res-item-header">
+            <div>
+              <h3><%= item.degree %></h3>
+              <h4><%= item.institution %></h4>
+            </div>
+            <div class="text-right">
+              <span class="res-period"><%= item.period %></span>
+              <span class="gpa-badge d-block mt-1"><%= item.gpa %></span>
+            </div>
+          </div>
+          <p><%= item.desc %></p>
+        </div>
+        <% }) %>
+
+        <h2 class="res-sec-title mt-4"><i class="fas fa-trophy"></i> Achievements</h2>
+        <% achievements.forEach(item => { %>
+        <div class="res-item">
+          <div class="res-item-header">
+            <div>
+              <h3><%= item.title %></h3>
+              <h4><%= item.org %></h4>
+            </div>
+            <span class="res-period"><%= item.year %></span>
+          </div>
+          <p><%= item.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+
+      <div class="resume-sidebar">
+        <h2 class="res-sec-title"><i class="fas fa-code"></i> Tech Stack</h2>
+        <div class="res-skills-list">
+          <div class="res-skill-group">
+            <h4>Languages</h4>
+            <div class="chip-row"><span>C</span><span>C++</span><span>Python</span><span>Java</span><span>JavaScript</span><span>PHP</span></div>
+          </div>
+          <div class="res-skill-group">
+            <h4>Frontend</h4>
+            <div class="chip-row"><span>HTML</span><span>CSS</span><span>React</span><span>Bootstrap</span><span>Tailwind CSS</span></div>
+          </div>
+          <div class="res-skill-group">
+            <h4>Backend</h4>
+            <div class="chip-row"><span>Node.js</span><span>Express.js</span><span>Passport.js</span><span>Cloudinary</span></div>
+          </div>
+          <div class="res-skill-group">
+            <h4>Database</h4>
+            <div class="chip-row"><span>MySQL</span><span>MongoDB</span></div>
+          </div>
+          <div class="res-skill-group">
+            <h4>Tools</h4>
+            <div class="chip-row"><span>Git</span><span>GitHub</span><span>VS Code</span><span>Postman</span><span>Hoppscotch</span><span>Render</span><span>Power BI</span></div>
+          </div>
+          <div class="res-skill-group">
+            <h4>Concepts</h4>
+            <div class="chip-row"><span>REST APIs</span><span>MVC Architecture</span><span>Data Structures and Algorithms</span><span>OOPs</span><span>Operating System</span><span>DBMS</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

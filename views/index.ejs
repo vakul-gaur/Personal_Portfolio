@@ -1,0 +1,167 @@
+<%- include('partials/header') %>
+
+<div class="custom-cursor-dot" id="cursorDot"></div>
+<div class="custom-cursor-ring" id="cursorRing"></div>
+
+<section class="hero-section">
+  <div class="hero-bg-grid"></div>
+  <div class="aurora-mesh">
+    <span class="blob blob1"></span>
+    <span class="blob blob2"></span>
+    <span class="blob blob3"></span>
+  </div>
+  <div class="grain-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="status-dot"></span> Available for Work
+      </div>
+
+      <h1 class="hero-title">
+        Hi, I'm<br>
+        <span class="gradient-text">Vakul Kumar Gaur</span>
+      </h1>
+
+      <h2 class="hero-sub">A Passionate <span id="typewriter" class="typewriter-text"></span><span class="cursor">|</span></h2>
+      <p class="hero-desc">I build modern, responsive web applications with strong back-end logic and intuitive front-end design — from concept to deployment.</p>
+      
+      <div class="hero-stats">
+        <div class="stat-pill"><span class="stat-num">12+</span><span class="stat-label">Projects</span></div>
+        <div class="stat-pill"><span class="stat-num">2+</span><span class="stat-label">Internships</span></div>
+        <div class="stat-pill"><span class="stat-num">8.71</span><span class="stat-label">CGPA</span></div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="/portfolio" class="btn-primary">View Projects <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="/about" class="btn-ghost">My Story <i class="fa-regular fa-user"></i></a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-img-wrap" id="heroImgWrap">
+        <div class="blob-frame">
+          <img src="/img/img1.png" alt="Vakul Kumar Gaur" class="hero-img"/>
+        </div>
+        <div class="blob-frame blob-frame-outline"></div>
+
+        <span class="skill-chip chip1"><i class="fa-brands fa-react"></i></span>
+        <span class="skill-chip chip2"><i class="fa-brands fa-node-js"></i></span>
+        <span class="skill-chip chip3"><i class="fa-brands fa-js"></i></span>
+        <span class="skill-chip chip4"><i class="fa-solid fa-leaf"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-ticker">
+    <div class="ticker-track" id="tickerTrack">
+      <span>CREATIVE</span><span class="dot">✦</span>
+      <span>INNOVATIVE</span><span class="dot">✦</span>
+      <span>PASSIONATE</span><span class="dot">✦</span>
+      <span>DEDICATED</span><span class="dot">✦</span>
+      <span>FULLSTACK</span><span class="dot">✦</span>
+    </div>
+  </div>
+</section>
+
+<section class="about-strip section-pad">
+  <div class="strip-inner">
+    <div class="strip-img-side">
+      <div class="img-card-wrap">
+        <div class="badge-float">
+          <span class="badge-num">12+</span>
+          <span class="badge-lbl">Completed Projects</span>
+        </div>
+        <img src="/img/img2.png" alt="Vakul Gaur" class="strip-img"/>
+        <div class="exp-badge">
+          <span>1+</span> Year Exp.
+        </div>
+      </div>
+    </div>
+
+    <div class="strip-text-side">
+      <span class="section-tag">About Me</span>
+      <h2>Crafting Experiences Since <span class="gradient-text">2024</span></h2>
+      <p>I'm a passionate Full Stack Developer who enjoys transforming ideas into impactful digital 
+        experiences through clean architecture, intuitive design, and scalable solutions. 
+        I approach every project with curiosity, precision, and a strong focus on creating products 
+        that genuinely solve real-world problems.</p>
+      <p>What drives me is the satisfaction of solving complex problems and making a real impact through 
+        clean, performant code and intuitive interfaces.</p>
+      <p>I believe in clear communication, long term value, and building strong relationships through trust 
+        and reliability. I also enjoy sharing what I learn along the way, helping others to grow.</p>
+      <div class="tech-chips">
+        <span>React</span><span>Node.js</span><span>Express.js</span><span>MongoDB</span>
+      </div> <br>
+      <a href="/about" class="btn-primary mt-2">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<section class="services-section section-pad">
+  <div class="section-header">
+    <span class="section-tag">Services</span>
+    <h2>What I <span class="gradient-text">Offer</span></h2>
+    <p>Comprehensive web development and design services tailored to your specific needs.</p>
+  </div>
+  <div class="services-ticker-wrap">
+    <div class="services-track" id="servicesTrack">
+      <% services.forEach(service => { %>
+      <div class="svc-card">
+        <div class="svc-icon"><i class="<%= service.icon %>"></i></div>
+        <h3><%= service.title %></h3>
+        <p><%= service.desc %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="projects-section section-pad">
+  <div class="section-header">
+    <span class="section-tag">My Works</span>
+    <h2>Featured <span class="gradient-text">Projects</span></h2>
+    <p>A selection of my most impactful work.</p>
+  </div>
+
+  <div class="slider-outer">
+    <button class="slider-nav prev" id="sliderPrev"><i class="fas fa-chevron-left"></i></button>
+    <div class="slider-viewport">
+      <div class="project-slider" id="projectSlider">
+        <% projects.forEach(project => { %>
+        <div class="proj-card">
+          <div class="proj-img-wrap">
+            <img src="/<%= project.img %>" alt="<%= project.title %>" onerror="this.src='/img/placeholder.png'"/>
+            <div class="proj-overlay">
+              <a href="<%= project.link %>" class="proj-link" target="_blank"><i class="fas fa-external-link-alt"></i> View</a>
+            </div>
+          </div>
+
+          <div class="proj-info">
+            <h3><%= project.title %></h3>
+            <p><%= project.desc %></p>
+            <div class="proj-tags">
+              <% project.tags.forEach(tag => { %><span><%= tag %></span><% }) %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <button class="slider-nav next" id="sliderNext"><i class="fas fa-chevron-right"></i></button>
+  </div>
+
+  <div class="center-action">
+    <a href="/portfolio" class="btn-ghost">View All Projects <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="cta-content">
+    <h2>Let's Build Something <span class="gradient-text">Amazing</span></h2>
+    <p>Have a project in mind? Let's talk and turn your vision into reality.</p>
+    <a href="/contact" class="btn-primary">Start a Conversation <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
